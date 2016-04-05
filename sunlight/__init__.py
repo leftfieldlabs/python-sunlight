@@ -56,6 +56,8 @@ def _attempt_to_load_apikey():
         fp = os.path.expanduser(sunlight.config.KEY_LOCATION)
         fd = open(fp, 'r')
         sunlight.config.API_KEY = fd.read().strip()
+    except ImportError as e:
+        warnings.warn('ImportError; most likely attempting to load pwd on GAE')
     except IOError as e:
         if e.errno != 2:
             warnings.warn('key file %s exists but could not be opened: %s' % (
